@@ -20,7 +20,9 @@ class Server
 
 
     public function run(){
-        $this->server->start();
+        go(function(){
+            $this->server->start();
+        });
     }
 
 
