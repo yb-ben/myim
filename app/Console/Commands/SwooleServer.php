@@ -39,10 +39,11 @@ class SwooleServer extends Command
     public function handle()
     {
         app(\App\Console\IM\Server::class,
-            [
-                '0.0.0.0',
-                9502,
+
                 [
+                    'host'=>'0.0.0.0',
+                'post'=>9502,
+                'callbacks'=>[
                     'open'=>function(Server $server,$request){
                         $this->info($request->fd.'链接成功');
                     },
@@ -56,7 +57,8 @@ class SwooleServer extends Command
                         $this->info($fd.'断开连接');
                     }
                     ]
-            ])
+                ]
+            )
             ->run();
     }
 }
