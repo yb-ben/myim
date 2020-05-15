@@ -79,7 +79,14 @@ class SwooleDanmu extends Command
 
 
                 $ws =  new Client($server['host'],$server['wss_port'],true);
+                $ws->setHeaders([
+                   'Host'=>$server['host'],
+                    'Origin'=>'https://'.$server['host'],
+                    'User-Agent'=> 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.138 Safari/537.36'
+                ]);
                 $ret = $ws->upgrade('/sub');
+                var_dump($ws->statusCode);
+
                 if($ret){
                     if(strlen($payload) % 2){
                        $payload = pack("H*",$payload);
