@@ -40,10 +40,9 @@ class SwooleServer extends Command
     {
         app(\App\Console\IM\Server::class,
 
-                [
-                    'host'=>'0.0.0.0',
-                    'post'=>9502
-                ]
+
+                    ['host'=>'0.0.0.0', 'post'=>9502]
+
 
             )
             ->run();

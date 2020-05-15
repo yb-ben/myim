@@ -17,7 +17,7 @@ class Server
     protected $queue = 'swoole:im:record';
 
     protected $config = [
-        'daemonize' => 1,
+     //   'daemonize' => 1,
         'log_file' =>  './storage/app/swoole_im.log',
         'pid_file' => './storage/app/server.pid'
     ];
@@ -98,7 +98,7 @@ class Server
             'open'=>function(\Swoole\WebSocket\Server $server, $request){
                 $this->info($request->fd.'链接成功');
             },
-            'message'=>function(Server $server,Frame $frame){
+            'message'=>function(\Swoole\WebSocket\Server $server,Frame $frame){
                 $content = $frame->data;
                 $send = json_encode(['s'=>0,'c'=>$content]);
 
@@ -107,11 +107,11 @@ class Server
                 }
                 //$this->getRedisInstance()->lpush($this->queue,$send);
             },
-            'close'=>function(Server $server,$fd){
+            'close'=>function(\Swoole\WebSocket\Server $server,$fd){
                 $this->info($fd.'断开连接');
             },
-            'shutdown'=>function(\Swoole\Server $server){
-                $this->getRedisInstance()->close();
+            'shutdown'=>function(\Swoole\WebSocket\Server $server){
+               // $this->getRedisInstance()->close();
             }
         ];
 
