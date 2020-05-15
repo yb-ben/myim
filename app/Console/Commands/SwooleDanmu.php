@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use Swoole\Coroutine\Http\Client;
+use Swoole\Timer;
 use Swoole\WebSocket\Server;
 
 class SwooleDanmu extends Command
@@ -85,20 +86,18 @@ class SwooleDanmu extends Command
                     }else{
                        $payload = hex2bin($payload);
                     }
-                    $ws->push(hex2bin($payload),WEBSOCKET_OPCODE_BINARY);
-                    go(function ()use($ws){
+                    $ws->push($payload,WEBSOCKET_OPCODE_BINARY);
+                    go(function ()use($ws,$heartBit){
                         while(true){
-                            $msg = $ws->recv(3);
+                            $msg = $ws->recv(1);
+                            Timer::tick(1000,function()use($heartBit,$ws){
+                                $ws->push($heartBit,WEBSOCKET_OPCODE_BINARY);
+                                var_dump(1);
+                            });
                             var_dump($msg);
                         }
                     });
-                    go(function ()use($ws,$heartBit){
-                       while(true){
-                           $ws->push($heartBit,WEBSOCKET_OPCODE_BINARY);
-                           var_dump(1);
-                           sleep(1);
-                       }
-                    });
+
                 }
             }
         });
