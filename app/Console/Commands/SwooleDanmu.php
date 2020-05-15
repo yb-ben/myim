@@ -41,7 +41,7 @@ class SwooleDanmu extends Command
     {
         go(function(){
             $roomId = '21664698';
-            $client = new Client('api.live.bilibili.com',80,true);
+            $client = new Client('api.live.bilibili.com',443,true);
             $client->setHeaders([
                 'Host'=>'api.live.bilibili.com',
                 'origin'=>'https://live.bilibili.com',
