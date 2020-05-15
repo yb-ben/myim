@@ -77,15 +77,21 @@ class SwooleDanmu extends Command
                 $len = strlen($payload);
                 var_dump($len);
                 $payload= bin2hex($payload);
-                $l =  str_pad(''.(( $len + 32)/2) ,8,'0',STR_PAD_LEFT);
+                $l =  str_pad(''.( $len + 16) ,8,'0',STR_PAD_LEFT);
                 $payload = $l.'001000010000000700000001'.$payload;
 
 
                 $ws =  new Client($server['host'],$server['wss_port'],true);
                 $ws->setHeaders([
+                    'Accept-Encoding'=>'gzip, deflate, br',
+                    'Accept-Language'=>'zh-CN,zh;q=0.9',
                    'Host'=>$server['host'],
                     'Origin'=>'https://'.$server['host'],
                     'User-Agent'=> 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.138 Safari/537.36'
+                ]);
+                $ws->set([
+                   'ssl_host_name'=> $server['host'],
+                    'websocket_mask' => true
                 ]);
                 $ret = $ws->upgrade('/sub');
                 var_dump($ws->statusCode);
@@ -95,7 +101,7 @@ class SwooleDanmu extends Command
                     $payload = pack("H*",$payload);
 
                     var_dump($ws->push($payload, WEBSOCKET_OPCODE_BINARY));
-                    $msg = $ws->recv(1);
+                    $msg = $ws->recv();
                     var_dump($msg);
                     var_dump($ws->errCode);
                         $last= 0;
