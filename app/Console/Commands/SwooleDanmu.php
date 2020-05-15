@@ -13,7 +13,7 @@ class SwooleDanmu extends Command
      *
      * @var string
      */
-    protected $signature = 'swoole:danmu';
+    protected $signature = 'swoole:danmu {roomId}';
 
     /**
      * The console command description.
@@ -40,7 +40,7 @@ class SwooleDanmu extends Command
     public function handle()
     {
         go(function(){
-            $roomId = '21664698';
+            $roomId = $this->argument('roomId');
             $client = new Client('api.live.bilibili.com',443,true);
             $client->setHeaders([
                 'Host'=>'api.live.bilibili.com',
