@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="df0f63eb-d70d-46dd-a055-934970873efd" name="Default Changelist" comment="" />
+    <list default="true" id="df0f63eb-d70d-46dd-a055-934970873efd" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/app/Console/Commands/SwooleDanmu.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -122,7 +125,7 @@
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../laradmin" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../ObserveLiver" />
     <property name="nodejs_package_manager_path" value="npm" />
   </component>
   <component name="RecentsManager">
@@ -153,7 +156,7 @@
       <option name="presentableId" value="Default" />
       <updated>1589455455338</updated>
       <workItem from="1589455457872" duration="8086000" />
-      <workItem from="1589502526589" duration="19307000" />
+      <workItem from="1589502526589" duration="21336000" />
     </task>
     <servers />
   </component>
