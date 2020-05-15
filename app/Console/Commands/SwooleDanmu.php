@@ -87,13 +87,14 @@ class SwooleDanmu extends Command
                        $payload = hex2bin($payload);
                     }
                     $ws->push($payload,WEBSOCKET_OPCODE_BINARY);
-                    go(function ()use($ws,$heartBit){
+                    go(function ()use(&$ws,&$heartBit){
+                        Timer::tick(1000,function()use(&$heartBit,&$ws){
+                            $ws->push($heartBit,WEBSOCKET_OPCODE_BINARY);
+                            var_dump(1);
+                        });
                         while(true){
                             $msg = $ws->recv(1);
-                            Timer::tick(1000,function()use($heartBit,$ws){
-                                $ws->push($heartBit,WEBSOCKET_OPCODE_BINARY);
-                                var_dump(1);
-                            });
+
                             var_dump($msg);
                         }
                     });
