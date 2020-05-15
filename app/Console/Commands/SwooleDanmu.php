@@ -61,20 +61,22 @@ class SwooleDanmu extends Command
                 $server = $body['data']['host_server_list'][0];
                 $key = $body['data']['token'];
                 $first = [
-                    'uid'=>'4906232',
-                    'roomId' => $roomId,
+                    'uid'=>4906232,
+                    'roomid' => intval($roomId),
                     'protover'=>2,
                     "platform"=>"web",
                     "clientver"=>"1.12.0",
                     "type"=>2,
-                    'token'=>$key
+                    'key'=>$key
                 ];
 
                 $heartBit = hex2bin('0000001f0010000100000002000000015b6f626a656374204f626a6563745d');
+                    $heartBit2      =  pack('H*','0000001f0010000100000002000000015b6f626a656374204f626a6563745d');
+                var_dump($heartBit);
+                var_dump($heartBit2);
 
                 $payload= bin2hex(json_encode($first));
-                $l =  sprintf("%04x",dechex(strlen($payload) + 32));
-
+                $l =  str_pad(''.(strlen($payload) + 32) ,4,'0',STR_PAD_LEFT);
                 $payload = '0000'.$l.'001000010000000700000001'.$payload;
 
 
@@ -98,10 +100,6 @@ class SwooleDanmu extends Command
                     var_dump($msg);
                     var_dump($ws->errCode);
                     go(function ()use(&$ws,&$heartBit){
-//                        Timer::tick(1000,function()use(&$heartBit,&$ws){
-//                            $ws->push($heartBit,WEBSOCKET_OPCODE_BINARY);
-//                            var_dump(1);
-//                        });
                         $last= 0;
                         while(true){
                             $time = time();
