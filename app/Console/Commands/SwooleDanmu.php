@@ -86,7 +86,9 @@ class SwooleDanmu extends Command
                     }else{
                        $payload = hex2bin($payload);
                     }
-                    $ws->push($payload,WEBSOCKET_OPCODE_BINARY);
+                    var_dump($ws->push($payload, WEBSOCKET_OPCODE_BINARY));
+                    $msg = $ws->recv(1);
+                    var_dump($msg);
                     go(function ()use(&$ws,&$heartBit){
 //                        Timer::tick(1000,function()use(&$heartBit,&$ws){
 //                            $ws->push($heartBit,WEBSOCKET_OPCODE_BINARY);
@@ -96,10 +98,10 @@ class SwooleDanmu extends Command
                         while(true){
                             $time = time();
                             $msg = $ws->recv(1);
+                            print_r($msg);
                             if($time - $last > 1){
                                 var_dump($ws->push($heartBit, WEBSOCKET_OPCODE_BINARY));
                             }
-                            var_dump($msg);
                         }
                     });
 
