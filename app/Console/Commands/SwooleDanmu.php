@@ -70,13 +70,11 @@ class SwooleDanmu extends Command
                     'key'=>$key
                 ];
 
-                $heartBit = hex2bin('0000001f0010000100000002000000015b6f626a656374204f626a6563745d');
-                    $heartBit2      =  pack('H*','0000001f0010000100000002000000015b6f626a656374204f626a6563745d');
+                $heartBit = pack('H*','0000001f0010000100000002000000015b6f626a656374204f626a6563745d');
                 var_dump($heartBit);
-                var_dump($heartBit2);
 
                 $payload= bin2hex(json_encode($first));
-                $l =  str_pad(''.(strlen($payload) + 32) ,4,'0',STR_PAD_LEFT);
+                $l =  str_pad(''.((strlen($payload) + 32)/2) ,4,'0',STR_PAD_LEFT);
                 $payload = '0000'.$l.'001000010000000700000001'.$payload;
 
 
@@ -90,16 +88,13 @@ class SwooleDanmu extends Command
                 var_dump($ws->statusCode);
 
                 if($ret){
-                    if(strlen($payload) % 2){
-                       $payload = pack("H*",$payload);
-                    }else{
-                       $payload = hex2bin($payload);
-                    }
+
+                    $payload = pack("H*",$payload);
+
                     var_dump($ws->push($payload, WEBSOCKET_OPCODE_BINARY));
                     $msg = $ws->recv(1);
                     var_dump($msg);
                     var_dump($ws->errCode);
-                    go(function ()use(&$ws,&$heartBit){
                         $last= 0;
                         while(true){
                             $time = time();
@@ -109,7 +104,6 @@ class SwooleDanmu extends Command
                                 var_dump($ws->push($heartBit, WEBSOCKET_OPCODE_BINARY));
                             }
                         }
-                    });
 
                 }
             }
