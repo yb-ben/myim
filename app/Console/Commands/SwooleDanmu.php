@@ -96,6 +96,7 @@ class SwooleDanmu extends Command
                     var_dump($ws->push($payload, WEBSOCKET_OPCODE_BINARY));
                     $msg = $ws->recv(1);
                     var_dump($msg);
+                    var_dump($ws->errCode);
                     go(function ()use(&$ws,&$heartBit){
 //                        Timer::tick(1000,function()use(&$heartBit,&$ws){
 //                            $ws->push($heartBit,WEBSOCKET_OPCODE_BINARY);
