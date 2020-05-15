@@ -79,7 +79,11 @@ class SwooleDanmu extends Command
                 $ws =  new Client($server['host'],$server['wss_port'],true);
                 $ret = $ws->upgrade('/sub');
                 if($ret){
-
+                    if(strlen($payload) % 2){
+                       $payload = pack("H*",$payload);
+                    }else{
+                       $payload = hex2bin($payload);
+                    }
                     $ws->push(hex2bin($payload),WEBSOCKET_OPCODE_BINARY);
                     go(function ()use($ws){
                         while(true){
