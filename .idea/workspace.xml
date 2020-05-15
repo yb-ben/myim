@@ -2,8 +2,22 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="df0f63eb-d70d-46dd-a055-934970873efd" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/app/Console/IM/Recorder.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Http/Controllers/IM/RoomController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Http/Resources/Rooms.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Models/Records.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Models/RoomUsers.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Models/Rooms.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/js/jquery-3.5.1.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/js/reconnecting-websocket.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/IM/create.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/IM/show.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Console/Commands/SwooleServer.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Console/Commands/SwooleServer.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Console/IM/Server.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Console/IM/Server.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/home.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/home.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/layouts/app.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/app.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -11,7 +25,7 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ComposerSettings" synchronizationState="SYNCHRONIZE">
+  <component name="ComposerSettings" doNotAsk="true" synchronizationState="SYNCHRONIZE">
     <pharConfigPath>$PROJECT_DIR$/composer.json</pharConfigPath>
     <execution>
       <executable />
@@ -20,6 +34,7 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="PhpDebugGeneral" listening_started="true" />
   <component name="PhpWorkspaceProjectConfiguration">
     <include_path>
       <path value="$PROJECT_DIR$/vendor/dnoegel/php-xdg-base-dir" />
@@ -124,8 +139,13 @@
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../ObserveLiver" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../laradmin" />
     <property name="nodejs_package_manager_path" value="npm" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\phpstudy_pro\WWW\myim\public\js" />
+    </key>
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -139,12 +159,6 @@
       </list>
     </option>
   </component>
-  <component name="RunManager">
-    <configuration name="phpunit.xml" type="PHPUnitRunConfigurationType" factoryName="PHPUnit">
-      <TestRunner scope="XML" />
-      <method v="2" />
-    </configuration>
-  </component>
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -155,7 +169,8 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1589455455338</updated>
-      <workItem from="1589455457872" duration="5995000" />
+      <workItem from="1589455457872" duration="8086000" />
+      <workItem from="1589502526589" duration="18966000" />
     </task>
     <servers />
   </component>
@@ -167,7 +182,9 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
           </value>
         </entry>
       </map>

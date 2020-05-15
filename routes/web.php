@@ -19,4 +19,10 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::group(['namespace'=>'IM'],function(){
+
+    Route::get('/home', 'RoomController@index')->name('home');
+    Route::get('/IM/create','RoomController@create');
+    Route::post('/IM','RoomController@store');
+    Route::get('/IM/{roomId}','RoomController@show');
+});

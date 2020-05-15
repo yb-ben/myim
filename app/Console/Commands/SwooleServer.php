@@ -42,22 +42,9 @@ class SwooleServer extends Command
 
                 [
                     'host'=>'0.0.0.0',
-                'post'=>9502,
-                'callbacks'=>[
-                    'open'=>function(Server $server,$request){
-                        $this->info($request->fd.'链接成功');
-                    },
-                    'message'=>function(Server $server,$frame){
-                        $content = $frame->data;
-                        foreach ($server->connections as $connection){
-                            $server->push($connection,$content);
-                        }
-                    },
-                    'close'=>function(Server $server,$fd){
-                        $this->info($fd.'断开连接');
-                    }
-                    ]
+                    'post'=>9502
                 ]
+
             )
             ->run();
     }
