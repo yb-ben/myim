@@ -72,8 +72,9 @@ class SwooleDanmu extends Command
                 $heartBit = hex2bin('0000001f0010000100000002000000015b6f626a656374204f626a6563745d');
 
                 $payload= bin2hex(json_encode($first));
+                $l =  sprintf("%04x",dechex(strlen($payload) + 32));
 
-                $payload = '0000'.dechex(strlen($payload) + 32).'001000010000000700000001'.$payload;
+                $payload = '0000'.$l.'001000010000000700000001'.$payload;
 
 
                 $ws =  new Client($server['host'],$server['wss_port'],true);
