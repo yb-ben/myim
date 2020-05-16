@@ -134,7 +134,6 @@ class Server
                         //心跳
                         $roomId = $this->map[$frame->fd][1];
                         $this->map[$frame->fd][0] = $time;
-                        $this->room[$roomId][] = $frame->fd;
                         $this->getRedisInstance()->zAdd('room:'.$roomId,$time,$this->map[$frame->fd][2]);
                         return true;
                     }
@@ -144,6 +143,7 @@ class Server
                         $roomId = $this->map[$frame->fd][1];
                         $send = json_encode(['s'=>0,'c'=>$msg['c']]);
                         var_dump($this->room);
+                        var_dump($frame->fd);
                         foreach ($this->room[$roomId] as $fd){
                             if($fd === $frame->fd)
                                 continue;
