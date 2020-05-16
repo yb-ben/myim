@@ -165,9 +165,9 @@ class Server
                 echo $fd.'断开连接';
                 $info = $this->map[$fd];
                 unset($this->map[$fd]);
-                foreach ($this->room[$info[1]] as &$item){
+                foreach ($this->room[$info[1]] as $k => &$item){
                     if($item === $fd){
-                        unset($item);
+                        unset($this->room[$info[1]][$k]);
                         break;
                     }
                 }
