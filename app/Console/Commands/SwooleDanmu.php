@@ -89,7 +89,11 @@ class SwooleDanmu extends Command
                     'User-Agent'=> 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.138 Safari/537.36'
                 ]);
                 $ws->set([
-                    'websocket_mask' => true
+                    'websocket_mask' => true,
+                    'socket_timeout' => 10,
+                    'socket_connect_timeout' => 5,
+                    'socket_read_timeout' => 5,
+                    'socket_write_timeout' => 5,
                 ]);
                 $ret = $ws->upgrade('/sub');
                 if($ret){
@@ -102,7 +106,7 @@ class SwooleDanmu extends Command
                     var_dump($ws->statusCode);
                     var_dump($ws->errMsg);
                         $last= 0;
-                        while($frame = $ws->recv(3)){
+                        while($frame = $ws->recv()){
                             $time = time();
                             var_dump($frame);
                             if($time - $last > 1){
@@ -112,6 +116,7 @@ class SwooleDanmu extends Command
                         }
 
                 }
+                $ws->close();
             }
         });
     }
