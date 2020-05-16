@@ -143,8 +143,10 @@ class Server
                         //消息
                         $roomId = $this->map[$frame->fd][1];
                         $send = json_encode(['s'=>0,'c'=>$msg['c']]);
-
+                        var_dump($this->room);
                         foreach ($this->room[$roomId] as $fd){
+                            if($fd === $frame->fd)
+                                continue;
                             $server->push($fd,$send);
                         }
                         return true;

@@ -56,8 +56,8 @@
                     },10000);
 
                     setInterval(()=>{
-                        ws.send(JSON.stringify({'type':2,'c'}))
-                    })
+                        ws.send(JSON.stringify({'type':2,'c':'test'}))
+                    },5000)
                 };
 
                 ws.onmessage = function(e) {
