@@ -54,6 +54,10 @@
                     setInterval(()=>{
                         ws.send(JSON.stringify({'type':3}));
                     },10000);
+
+                    setInterval(()=>{
+                        ws.send(JSON.stringify({'type':2,'c'}))
+                    })
                 };
 
                 ws.onmessage = function(e) {
@@ -63,6 +67,8 @@
                 ws.onclose = function() {
                     console.log('close');
                 };
+
+
             }
 
         </script>

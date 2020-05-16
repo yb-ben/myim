@@ -142,7 +142,7 @@ class Server
                     if($msg['type'] === 2){
                         //消息
                         $roomId = $this->map[$frame->fd][1];
-                        $send = json_encode(['s'=>0,'c'=>$content]);
+                        $send = json_encode(['s'=>0,'c'=>$msg['c']]);
 
                         foreach ($this->room[$roomId] as $fd){
                             $server->push($fd,$send);
