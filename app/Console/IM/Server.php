@@ -60,12 +60,12 @@ class Server
         $callbacks=[
 
             'open'=>function(\Swoole\WebSocket\Server $server, $request){
-                $this->info($request->fd.'链接成功');
+                echo '连接成功'.PHP_EOL;
             },
             'message'=>function(\Swoole\WebSocket\Server $server,Frame $frame){
                 $time = time();
                 $content = $frame->data;
-                $msg =json_decode($content);
+                $msg =json_decode($content,JSON_OBJECT_AS_ARRAY);
                 if(!isset($msg['type'])){
                     return $server->disconnect($frame->fd);
                 }
@@ -126,7 +126,7 @@ class Server
                     }
 
                     if(!isset($this->map[$frame->fd])) {
-                        return $server->disconnect($frame->fd);
+                        return true;
                     }
 
                     if($msg['type'] === 3){
@@ -146,6 +146,7 @@ class Server
                         foreach ($this->room[$roomId] as $fd){
                             $server->push($fd,$send);
                         }
+                        return true;
                     }
                 }
 

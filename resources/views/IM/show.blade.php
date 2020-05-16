@@ -45,7 +45,7 @@
 
             function ws(roomId,token){
 
-                let ws = new ReconnectingWebSocket('ws://120.78.76.101:9502);
+                let ws = new ReconnectingWebSocket('ws://120.78.76.101:9502');
                 ws.onopen = function() {
                     console.log('open');
 
@@ -53,7 +53,7 @@
 
                     setInterval(()=>{
                         ws.send(JSON.stringify({'type':3}));
-                    },5000);
+                    },10000);
                 };
 
                 ws.onmessage = function(e) {
