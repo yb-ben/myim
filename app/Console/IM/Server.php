@@ -147,7 +147,13 @@ class Server
                         foreach ($this->room[$roomId] as $fd){
                             if($fd === $frame->fd)
                                 continue;
-                            $server->push($fd,$send);
+                            try{
+                                $server->push($fd,$send);
+                            }catch (\Throwable $throwable){
+                                echo $throwable->getLine();
+                                echo $throwable->getMessage();
+                                echo PHP_EOL;
+                            }
                         }
                         return true;
                     }
