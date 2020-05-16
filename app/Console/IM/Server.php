@@ -76,21 +76,20 @@ class Server
                     }
                     //检验token
                     $tokenInfo = explode('.', decrypt($msg['token']));
-                    if(md5($tokenInfo[0]) !== $tokenInfo[1]){
+                    if(md5($tokenInfo[0].'.'.$tokenInfo[1].'.'.$tokenInfo[2]) !== $tokenInfo[1]){
                         return $server->disconnect($frame->fd);
                     }
-                    $t = explode('.',$tokenInfo[0]);
 
-                    if( $time - $t[0] > 3600){
+                    if( $time - $tokenInfo[0] > 3600){
                         return $server->disconnect($frame->fd);
                     }
 
 
                     //加入映射
-                    $this->map[$frame->fd] = [ $time ,$t[1],$t[2]];
-                    $this->room[$t[1]][]= $frame->fd;
+                    $this->map[$frame->fd] = [ $time ,$tokenInfo[1],$tokenInfo[2]];
+                    $this->room[$tokenInfo[1]][]= $frame->fd;
 
-                    $this->getRedisInstance()->zAdd('room:'.$t[1],$t[2],$time);
+                    $this->getRedisInstance()->zAdd('room:'.$tokenInfo[1],$tokenInfo[2],$time);
 
                 }else{
 

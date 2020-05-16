@@ -45,7 +45,7 @@
 
             function ws(roomId,token){
 
-                let ws = new ReconnectingWebSocket('ws://120.78.76.101:9502');
+                let ws = new ReconnectingWebSocket('ws://120.78.76.101:9502',null, {debug: true, reconnectInterval: 3000});
                 ws.onopen = function() {
                     console.log('open');
 
