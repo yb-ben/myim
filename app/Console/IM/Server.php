@@ -134,8 +134,8 @@ class Server
                         //心跳
                         $roomId = $this->map[$frame->fd][1];
                         $this->map[$frame->fd][0] = $time;
-                        $this->room[$roomId] = $frame->fd;
-                        $this->getRedisInstance()->zAdd('room:'.$roomId,$this->map[$frame->fd][2],$time);
+                        $this->room[$roomId][] = $frame->fd;
+                        $this->getRedisInstance()->zAdd('room:'.$roomId,$time,$this->map[$frame->fd][2]);
                         return true;
                     }
 
