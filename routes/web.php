@@ -19,7 +19,7 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::group(['namespace'=>'IM'],function(){
+Route::group(['namespace'=>'IM','middleware'=>'auth'],function(){
 
     Route::get('/home', 'RoomController@index')->name('home');
     Route::get('/IM/create','RoomController@create');

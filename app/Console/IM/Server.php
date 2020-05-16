@@ -157,6 +157,15 @@ class Server
             },
             'close'=>function(\Swoole\WebSocket\Server $server,$fd){
                 echo $fd.'断开连接';
+                $info = $this->map[$fd];
+                unset($this->map[$fd]);
+                foreach ($this->room[$info[1]] as &$item){
+                    if($item === $fd){
+                        unset($item);
+                        break;
+                    }
+                }
+                $this->getRedisInstance()->zRem('room:'.$info[1],$info[2]);
             },
             'shutdown'=>function(\Swoole\WebSocket\Server $server){
                // $this->getRedisInstance()->close();
