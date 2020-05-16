@@ -100,17 +100,17 @@ class SwooleDanmu extends Command
 
                     $payload = pack("H*",$payload);
 
-                    var_dump($ws->push($payload, WEBSOCKET_OPCODE_BINARY));
+                    var_dump($ws->push($payload));
                     $msg = $ws->recv();
                     var_dump($msg);
                     var_dump($ws->errCode);
                         $last= 0;
                         while(true){
                             $time = time();
-                            $msg = $ws->recv(1);
+                            $msg = $ws->recv();
                             print_r($msg);
                             if($time - $last > 1){
-                                var_dump($ws->push($heartBit, WEBSOCKET_OPCODE_BINARY));
+                                var_dump($ws->push($heartBit));
                             }
                         }
 

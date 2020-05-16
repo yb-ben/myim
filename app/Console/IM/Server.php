@@ -16,6 +16,13 @@ class Server
 
     protected $queue = 'swoole:im:record';
 
+    protected $livetime = 60;
+
+    protected $maxPacketSize = 1024*1024*1024;
+
+    protected $map = [];
+    protected $room = [];
+
     protected $config = [
      //   'daemonize' => 1,
         'log_file' =>  './storage/app/swoole_im.log',
@@ -25,7 +32,7 @@ class Server
 
     public function __construct($host = '0.0.0.0',$port = 9502)
     {
-       // $this->getRedisInstance();
+        $this->getRedisInstance();
         $this->server = new \Swoole\WebSocket\Server($host,$port,SWOOLE_PROCESS);
         $this->server->set($this->config);
         $this->setListener();
@@ -51,60 +58,97 @@ class Server
     //设置监听函数
     protected function setListener(){
         $callbacks=[
-            'handshake'=>function(Request $request,Response $response){
-                print_r($request->header);
-                // print_r( $request->header );
-                // if (如果不满足我某些自定义的需求条件，那么返回end输出，返回false，握手失败) {
-                //    $response->end();
-                //     return false;
-                // }
 
-                // websocket握手连接算法验证
-                $secWebSocketKey = $request->header['sec-websocket-key'];
-                $patten = '#^[+/0-9A-Za-z]{21}[AQgw]==$#';
-                if (0 === preg_match($patten, $secWebSocketKey) || 16 !== strlen(base64_decode($secWebSocketKey))) {
-                    $response->end();
-                    return false;
-                }
-                echo $request->header['sec-websocket-key'];
-                $key = base64_encode(
-                    sha1(
-                        $request->header['sec-websocket-key'] . '258EAFA5-E914-47DA-95CA-C5AB0DC85B11',
-                        true
-                    )
-                );
-
-                $headers = [
-                    'Upgrade' => 'websocket',
-                    'Connection' => 'Upgrade',
-                    'Sec-WebSocket-Accept' => $key,
-                    'Sec-WebSocket-Version' => '13',
-                ];
-
-                // WebSocket connection to 'ws://127.0.0.1:9502/'
-                // failed: Error during WebSocket handshake:
-                // Response must not include 'Sec-WebSocket-Protocol' header if not present in request: websocket
-                if (isset($request->header['sec-websocket-protocol'])) {
-                    $headers['Sec-WebSocket-Protocol'] = $request->header['sec-websocket-protocol'];
-                }
-
-                foreach ($headers as $key => $val) {
-                    $response->header($key, $val);
-                }
-
-                $response->status(101);
-                $response->end();
-            },
             'open'=>function(\Swoole\WebSocket\Server $server, $request){
                 $this->info($request->fd.'链接成功');
             },
             'message'=>function(\Swoole\WebSocket\Server $server,Frame $frame){
+                $time = time();
                 $content = $frame->data;
-                $send = json_encode(['s'=>0,'c'=>$content]);
-
-                foreach ($server->connections as $connection){
-                    $server->push($connection,$send);
+                $msg =json_decode($content);
+                if(!isset($msg['type'])){
+                    return $server->disconnect($frame->fd);
                 }
+                if ($msg['type'] === 1) {
+                    //认证
+                    if(empty($msg['token'])){
+                        return $server->disconnect($frame->fd);
+                    }
+                    //检验token
+                    $tokenInfo = explode('.', decrypt($msg['token']));
+                    if(md5($tokenInfo[0]) !== $tokenInfo[1]){
+                        return $server->disconnect($frame->fd);
+                    }
+                    $t = explode('.',$tokenInfo[0]);
+
+                    if( $time - $t[0] > 3600){
+                        return $server->disconnect($frame->fd);
+                    }
+
+
+                    //加入映射
+                    $this->map[$frame->fd] = [ $time ,$t[1],$t[2]];
+                    $this->room[$t[1]][]= $frame->fd;
+
+                    $this->getRedisInstance()->zAdd('room:'.$t[1],$t[2],$time);
+
+                }else{
+
+                    $waitForRem = [];
+                    $roomRem = [];
+                    //移除过期连接
+                    foreach ($this->map as $fd => $item){
+                        if($time - $item[0] > $this->livetime){
+                            unset($this->map[$fd]);
+
+                            $waitForRem[$item[1]][] = $item[2];
+                            foreach ($this->room[$item[1]] as &$room){
+                                if($room === $fd){
+                                    unset($room);
+                                    if (empty($this->room[$item[1]])) {
+                                        unset($this->room[$item[1]]);
+                                        $roomRem[] = $item[1];
+                                    }
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    //移除信息
+                    foreach ($roomRem as $v){
+                        $this->getRedisInstance()->del('room:'.$v);
+                        if(isset($waitForRem[$v])){
+                            unset($waitForRem[$v]);
+                        }
+                    }
+                    foreach ($waitForRem as $k => $v){
+                        $this->getRedisInstance()->zRem('room:'.$k,...$v);
+                    }
+
+                    if(!isset($this->map[$frame->fd])) {
+                        return $server->disconnect($frame->fd);
+                    }
+
+                    if($msg['type'] === 3){
+                        //心跳
+                        $roomId = $this->map[$frame->fd][1];
+                        $this->map[$frame->fd][0] = $time;
+                        $this->room[$roomId] = $frame->fd;
+                        $this->getRedisInstance()->zAdd('room:'.$roomId,$this->map[$frame->fd][2],$time);
+                        return true;
+                    }
+
+                    if($msg['type'] === 2){
+                        //消息
+                        $roomId = $this->map[$frame->fd][1];
+                        $send = json_encode(['s'=>0,'c'=>$content]);
+
+                        foreach ($this->room[$roomId] as $fd){
+                            $server->push($fd,$send);
+                        }
+                    }
+                }
+
                 //$this->getRedisInstance()->lpush($this->queue,$send);
             },
             'close'=>function(\Swoole\WebSocket\Server $server,$fd){
