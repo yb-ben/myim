@@ -153,7 +153,7 @@ class Server
                 //$this->getRedisInstance()->lpush($this->queue,$send);
             },
             'close'=>function(\Swoole\WebSocket\Server $server,$fd){
-                $this->info($fd.'断开连接');
+                echo $fd.'断开连接';
             },
             'shutdown'=>function(\Swoole\WebSocket\Server $server){
                // $this->getRedisInstance()->close();
