@@ -71,13 +71,11 @@ class SwooleDanmu extends Command
                 ];
 
                 $heartBit = pack('H*','0000001f0010000100000002000000015b6f626a656374204f626a6563745d');
-                var_dump($heartBit);
+
                 $payload = json_encode($first);
-                var_dump($payload);
                 $len = strlen($payload);
-                var_dump($len);
                 $payload= bin2hex($payload);
-                $l =  str_pad(''.( $len + 16) ,8,'0',STR_PAD_LEFT);
+                $l =  str_pad(bin2hex(''.( $len + 16)) ,8,'0',STR_PAD_LEFT);
                 $payload = $l.'001000010000000700000001'.$payload;
 
                 var_dump($server);
@@ -90,14 +88,9 @@ class SwooleDanmu extends Command
                     'User-Agent'=> 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.138 Safari/537.36'
                 ]);
                 $ws->set([
-                   'ssl_host_name'=> $server['host'],
                     'websocket_mask' => true
                 ]);
                 $ret = $ws->upgrade('/sub');
-                var_dump($ws->statusCode);
-                var_dump($ws->errCode);
-                var_dump($ws->errMsg);
-
                 if($ret){
 
                     $payload = pack("H*",$payload);

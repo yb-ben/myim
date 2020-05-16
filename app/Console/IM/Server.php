@@ -94,7 +94,6 @@ class Server
                 }else{
 
                     $waitForRem = [];
-                    $roomRem = [];
                     //移除过期连接
                     foreach ($this->map as $fd => $item){
                         if($time - $item[0] > $this->livetime){
@@ -106,7 +105,6 @@ class Server
                                         unset($room);
                                         if (empty($this->room[$item[1]])) {
                                             unset($this->room[$item[1]]);
-                                            $roomRem[] = $item[1];
                                         }
                                         break;
                                     }
@@ -116,12 +114,12 @@ class Server
                         }
                     }
                     //移除信息
-                    foreach ($roomRem as $v){
-                        $this->getRedisInstance()->del('room:'.$v);
-                        if(isset($waitForRem[$v])){
-                            unset($waitForRem[$v]);
-                        }
-                    }
+//                    foreach ($roomRem as $v){
+//                        $this->getRedisInstance()->del('room:'.$v);
+//                        if(isset($waitForRem[$v])){
+//                            unset($waitForRem[$v]);
+//                        }
+//                    }
                     foreach ($waitForRem as $k => $v){
                         $this->getRedisInstance()->zRem('room:'.$k,...$v);
                     }
@@ -142,8 +140,9 @@ class Server
                         //消息
                         $roomId = $this->map[$frame->fd][1];
                         $send = json_encode(['s'=>0,'c'=>$msg['c']]);
-                        var_dump($this->room);
-                        var_dump($frame->fd);
+
+                        //@todo 判断房间是否已关闭
+
                         foreach ($this->room[$roomId] as $fd){
                             if($fd === $frame->fd)
                                 continue;

@@ -41,15 +41,15 @@ class RoomController extends Controller
             return redirect('IM/create')->withErrors($res)->withInput();
         }
 
-        if(Rooms::where('user_id',Auth::id())->count()){
+        try{
+            app(Rooms::class)->createRoomByRedis($request);
+        }catch (\Throwable $throwable){
             if(!$request->isJson()){
                 $res->errors()->add('id','你已创建了一个房间');
                 return redirect('IM/create')->withErrors($res)->withInput();
             }
             return response()->json(['msg'=>'你已创建了一个房间','status'=>400]);
         }
-
-        Rooms::create($data);
 
         if(!$request->isJson()){
             return view('home');
@@ -103,7 +103,7 @@ class RoomController extends Controller
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function show(Request $request,$roomId){
-        $room =Rooms::findOrFail($roomId);
+        $room = Rooms::findOrFail($roomId);
 
         $roomUsers = RoomUsers::with(['users'])->select()->get();
 
