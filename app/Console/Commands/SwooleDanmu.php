@@ -74,8 +74,9 @@ class SwooleDanmu extends Command
 
                 $payload = json_encode($first);
                 $len = strlen($payload);
+                var_dump($len);
                 $payload= bin2hex($payload);
-                $l =  str_pad(bin2hex(''.( $len + 16)) ,8,'0',STR_PAD_LEFT);
+                $l =  str_pad( ''.dechex( $len + 16) ,8,'0',STR_PAD_LEFT);
                 $payload = $l.'001000010000000700000001'.$payload;
 
                 var_dump($server);
@@ -96,17 +97,16 @@ class SwooleDanmu extends Command
                     $payload = pack("H*",$payload);
 
                     var_dump($ws->push($payload,WEBSOCKET_OPCODE_BINARY));
-                    $msg = $ws->recv();
-                    var_dump($msg);
+
                     var_dump($ws->errCode);
                     var_dump($ws->statusCode);
                     var_dump($ws->errMsg);
                         $last= 0;
-                        while(true){
+                        while($frame = $ws->recv(3)){
                             $time = time();
-                            $msg = $ws->recv();
-                            print_r($msg);
+                            var_dump($frame);
                             if($time - $last > 1){
+                                $last = $time;
                                 var_dump($ws->push($heartBit,WEBSOCKET_OPCODE_BINARY));
                             }
                         }
