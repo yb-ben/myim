@@ -80,7 +80,7 @@ class SwooleDanmu extends Command
                 $l =  str_pad(''.( $len + 16) ,8,'0',STR_PAD_LEFT);
                 $payload = $l.'001000010000000700000001'.$payload;
 
-
+                var_dump($server);
                 $ws =  new Client($server['host'],$server['wss_port'],true);
                 $ws->setHeaders([
                     'Accept-Encoding'=>'gzip, deflate, br',
@@ -95,6 +95,8 @@ class SwooleDanmu extends Command
                 ]);
                 $ret = $ws->upgrade('/sub');
                 var_dump($ws->statusCode);
+                var_dump($ws->errCode);
+                var_dump($ws->errMsg);
 
                 if($ret){
 
@@ -104,6 +106,8 @@ class SwooleDanmu extends Command
                     $msg = $ws->recv();
                     var_dump($msg);
                     var_dump($ws->errCode);
+                    var_dump($ws->statusCode);
+                    var_dump($ws->errMsg);
                         $last= 0;
                         while(true){
                             $time = time();
