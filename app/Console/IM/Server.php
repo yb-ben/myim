@@ -99,18 +99,20 @@ class Server
                     foreach ($this->map as $fd => $item){
                         if($time - $item[0] > $this->livetime){
                             unset($this->map[$fd]);
-
                             $waitForRem[$item[1]][] = $item[2];
-                            foreach ($this->room[$item[1]] as &$room){
-                                if($room === $fd){
-                                    unset($room);
-                                    if (empty($this->room[$item[1]])) {
-                                        unset($this->room[$item[1]]);
-                                        $roomRem[] = $item[1];
+                            if(!empty($this->room[$item[1]])){
+                                foreach ($this->room[$item[1]] as &$room){
+                                    if($room === $fd){
+                                        unset($room);
+                                        if (empty($this->room[$item[1]])) {
+                                            unset($this->room[$item[1]]);
+                                            $roomRem[] = $item[1];
+                                        }
+                                        break;
                                     }
-                                    break;
                                 }
                             }
+
                         }
                     }
                     //移除信息
