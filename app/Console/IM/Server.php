@@ -76,7 +76,7 @@ class Server
                     }
                     //检验token
                     $tokenInfo = explode('.', decrypt($msg['token']));
-                    if(md5($tokenInfo[0].'.'.$tokenInfo[1].'.'.$tokenInfo[2]) !== $tokenInfo[1]){
+                    if(md5($tokenInfo[0].'.'.$tokenInfo[1].'.'.$tokenInfo[2]) !== $tokenInfo[3]){
                         return $server->disconnect($frame->fd);
                     }
 
@@ -89,7 +89,7 @@ class Server
                     $this->map[$frame->fd] = [ $time ,$tokenInfo[1],$tokenInfo[2]];
                     $this->room[$tokenInfo[1]][]= $frame->fd;
 
-                    $this->getRedisInstance()->zAdd('room:'.$tokenInfo[1],$tokenInfo[2],$time);
+                    $this->getRedisInstance()->zAdd('room:'.$tokenInfo[1],$time,$tokenInfo[2]);
 
                 }else{
 
