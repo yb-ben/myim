@@ -16,7 +16,7 @@ class SwooleDanmu extends Command
      *
      * @var string
      */
-    protected $signature = 'swoole:danmu {roomId}';
+    protected $signature = 'swoole:danmu {roomId} {alias}';
 
     /**
      * The console command description.
