@@ -44,6 +44,7 @@ class BiliPacketParser
                 return $this->parseNotCompressData($body);
             }
         }
+        var_dump($body);
     }
 
 
