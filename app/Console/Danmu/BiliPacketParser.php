@@ -18,6 +18,7 @@ class BiliPacketParser
         if (empty($str)) {
             return $str;
         }
+        var_dump($str);
         $header = substr($str,0,16);
         $header = bin2hex($header);
         $this->debug && var_dump($header);
