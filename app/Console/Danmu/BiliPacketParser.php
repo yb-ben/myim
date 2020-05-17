@@ -95,7 +95,7 @@ class BiliPacketParser
             foreach ($this->buffer as $item){
                 $data .= implode(',',$item).PHP_EOL;
             }
-            echo System::fwrite($this->fp,$data);
+            fwrite($this->fp,$data,FILE_APPEND);
             $this->buffer = [];
         });
     }
