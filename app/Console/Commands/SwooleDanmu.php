@@ -110,7 +110,7 @@ class SwooleDanmu extends Command
                             if(is_object($frame)){
                                 $d = json_decode($frame->data);
                                 if (is_null($d)) {
-                                    $parser->parse($d);
+                                    var_dump($parser->parse($d));
                                 }else{
                                     var_dump($d);
                                 }

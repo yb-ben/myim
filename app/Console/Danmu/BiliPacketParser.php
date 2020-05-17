@@ -18,12 +18,12 @@ class BiliPacketParser
         if (empty($str)) {
             return $str;
         }
-        var_dump(bin2hex($str));
+        print_r( __LINE__) && var_dump(bin2hex($str));
         $header = substr($str,0,16);
         $header = bin2hex($header);
-        $this->debug && var_dump($header);
+        $this->debug && print_r( __LINE__) && var_dump($header);
         $header = str_split($header,2);
-        $this->debug && var_dump($header);
+        $this->debug && print_r( __LINE__) && var_dump($header);
         $body = substr($str,16);
         if('08' === $header[11]){
             //认证完成
@@ -56,7 +56,7 @@ class BiliPacketParser
         $body = substr($str,16);
 
         $b = substr($body,0,$len-16);
-        $this->debug && print_r($b);
+        $this->debug && print_r( __LINE__) && print_r($b);
         $d = json_decode($b,JSON_UNESCAPED_UNICODE);
 
         if($d['cmd'] === 'DANMU_MSG'){
