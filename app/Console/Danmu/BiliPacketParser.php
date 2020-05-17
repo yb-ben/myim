@@ -27,7 +27,7 @@ class BiliPacketParser
         $body = substr($str,16);
         if('08' === $header[11]){
             //认证完成
-            $body = json_decode($body);
+            $body = json_decode($body,JSON_OBJECT_AS_ARRAY);
             if($body['code'] === 0){
                 return true;
             }
@@ -57,7 +57,7 @@ class BiliPacketParser
 
         $b = substr($body,0,$len-16);
         $this->debug && print_r( __LINE__) && print_r($b);
-        $d = json_decode($b,JSON_UNESCAPED_UNICODE);
+        $d = json_decode($b,JSON_OBJECT_AS_ARRAY);
 
         if($d['cmd'] === 'DANMU_MSG'){
             $ret[] = [$d['info'][1],$d['info'][2][0],$d['info'][2][1],date('Y-m-d H:i:s',$d['info'][9]['ts'])];
