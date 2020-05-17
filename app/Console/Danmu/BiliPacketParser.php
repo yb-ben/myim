@@ -30,21 +30,17 @@ class BiliPacketParser
             if($body['code'] === 0){
                 return true;
             }
-            var_dump($body);
-            return false;
+            return true;
         }
         if('05' === $header[11]){
 
-            if('00' === $header[7]){
-                //return $this->parseNotCompressData($body);
-                return json_decode($body,JSON_OBJECT_AS_ARRAY);
-            }else{
+            if('00' !== $header[7]){
+
                 $context = inflate_init(ZLIB_ENCODING_DEFLATE);
                 $body = inflate_add($context,$body);
                 return $this->parseNotCompressData($body);
             }
         }
-        var_dump($body);
     }
 
 
