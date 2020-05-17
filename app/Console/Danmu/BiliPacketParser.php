@@ -70,7 +70,7 @@ class BiliPacketParser
 
         if($d['cmd'] === 'DANMU_MSG'){
             $uid = $d['info'][2][0];
-            if($uid === 421267475){
+            if($uid === 421267475 || false !== mb_strpos($d['info'][1],'艾因')){
                 $this->buffer[] = [$d['info'][1],$uid,$d['info'][2][1],date('Y-m-d H:i:s',$d['info'][9]['ts'])];
             }
         }
