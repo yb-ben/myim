@@ -102,7 +102,7 @@ class SwooleDanmu extends Command
                     $ws->push($payload,WEBSOCKET_OPCODE_BINARY);
 
                         $last= 0;
-                        $parser = new BiliPacketParser(true);
+                        $parser = new BiliPacketParser($roomId,true);
 
                         while(true){
                             $time = time();
@@ -111,11 +111,12 @@ class SwooleDanmu extends Command
                                 $d = json_decode($frame->data);
                                 if (is_null($d)) {
                                     echo 1;
-                                    var_dump($parser->parse($frame->data));
+                                    $parser->parse($frame->data);
                                 }
                             }else{
                                 echo 3;
-                                var_dump($parser->parse($frame));
+                                var_dump($frame);
+                                $parser->parse($frame);
                             }
 
                             if($time - $last > 30){

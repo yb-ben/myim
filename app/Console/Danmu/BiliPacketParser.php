@@ -9,14 +9,23 @@ class BiliPacketParser
 
     protected $debug = false;
 
-    public function __construct($debug = false)
+    protected $fp = null;
+
+    protected $buffer = [];
+
+    protected $roomId ;
+
+    public function __construct($roomId , $debug = false)
     {
         $this->debug = $debug;
+        $this->roomId = $roomId;
+        $this->fp = fopen(storage_path()."/$roomId.danmu",'a+');
+
     }
 
     public function parse($str){
         if (empty($str)) {
-            return $str;
+            return;
         }
         //print_r( __LINE__) && var_dump(bin2hex($str));
         $header = substr($str,0,16);
@@ -28,9 +37,9 @@ class BiliPacketParser
             //认证完成
             $body = json_decode($body,JSON_OBJECT_AS_ARRAY);
             if($body['code'] === 0){
-                return true;
+                return;
             }
-            return true;
+            return;
         }
         if('05' === $header[11]){
 
@@ -38,15 +47,15 @@ class BiliPacketParser
 
                 $context = inflate_init(ZLIB_ENCODING_DEFLATE);
                 $body = inflate_add($context,$body);
-                return $this->parseNotCompressData($body);
+                $this->parseNotCompressData($body);
+                $this->save();
             }
         }
     }
 
 
     protected function parseNotCompressData($str){
-        static $ret;
-        if(empty($ret)){$ret = [];}
+
         $header = substr($str,0,16);
         $header = bin2hex($header);
         $header = str_split($header,2);//头
@@ -58,15 +67,34 @@ class BiliPacketParser
         $d = json_decode($b,JSON_OBJECT_AS_ARRAY);
 
         if($d['cmd'] === 'DANMU_MSG'){
-            $ret[] = [$d['info'][1],$d['info'][2][0],$d['info'][2][1],date('Y-m-d H:i:s',$d['info'][9]['ts'])];
+            $this->buffer[] = [$d['info'][1],$d['info'][2][0],$d['info'][2][1],date('Y-m-d H:i:s',$d['info'][9]['ts'])];
         }
         if($d['cmd'] === 'SUPER_CHAT_MESSAGE'){
-            $ret[] = [$d['data']['uid'],$d['data']['message'],$d['data']['user_info']['uname'],date('Y-m-d H:i:s',$d['data']['ts'])];
+            $this->buffer[] = [$d['data']['uid'],$d['data']['message'],$d['data']['user_info']['uname'],date('Y-m-d H:i:s',$d['data']['ts'])];
         }
         $s = substr($body, $len - 16);
         if($s === ''){
-            return $ret;
+            return;
         }
         return $this->parseNotCompressData($s);
+    }
+
+
+    protected function save(){
+        go(function (){
+
+            $data = '';
+            foreach ($this->buffer as $item){
+                $data .= implode(',',$item).PHP_EOL;
+            }
+            echo \Swoole\Coroutine\System::fwrite($this->fp,$data);
+            $this->buffer = [];
+        });
+    }
+
+
+    public function __destruct()
+    {
+        fclose($this->fp);
     }
 }
