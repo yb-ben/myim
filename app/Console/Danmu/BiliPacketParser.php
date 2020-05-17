@@ -30,6 +30,7 @@ class BiliPacketParser
             if($body['code'] === 0){
                 return true;
             }
+            var_dump($body);
             return false;
         }
         if('05' === $header[11]){

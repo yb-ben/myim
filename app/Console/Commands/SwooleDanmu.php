@@ -112,9 +112,6 @@ class SwooleDanmu extends Command
                                 if (is_null($d)) {
                                     echo 1;
                                     var_dump($parser->parse($frame->data));
-                                }else{
-                                    echo 2;
-                                    var_dump($d);
                                 }
                             }else{
                                 echo 3;
