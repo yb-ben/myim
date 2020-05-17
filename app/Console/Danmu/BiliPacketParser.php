@@ -82,7 +82,7 @@ class BiliPacketParser
 
     protected function save(){
         go(function (){
-
+            var_dump($this->buffer);
             $data = '';
             foreach ($this->buffer as $item){
                 $data .= implode(',',$item).PHP_EOL;
