@@ -67,10 +67,16 @@ class BiliPacketParser
         $d = json_decode($b,JSON_OBJECT_AS_ARRAY);
 
         if($d['cmd'] === 'DANMU_MSG'){
-            $this->buffer[] = [$d['info'][1],$d['info'][2][0],$d['info'][2][1],date('Y-m-d H:i:s',$d['info'][9]['ts'])];
+            $uid = $d['info'][2][0];
+            if($uid === 421267475){
+                $this->buffer[] = [$d['info'][1],$uid,$d['info'][2][1],date('Y-m-d H:i:s',$d['info'][9]['ts'])];
+            }
         }
-        if($d['cmd'] === 'SUPER_CHAT_MESSAGE'){
-            $this->buffer[] = [$d['data']['uid'],$d['data']['message'],$d['data']['user_info']['uname'],date('Y-m-d H:i:s',$d['data']['ts'])];
+        else if($d['cmd'] === 'SUPER_CHAT_MESSAGE'){
+            $uid = $d['data']['uid'];
+            if($uid === 421267475){
+                $this->buffer[] = [$uid,$d['data']['message'],$d['data']['user_info']['uname'],date('Y-m-d H:i:s',$d['data']['ts'])];
+            }
         }
         $s = substr($body, $len - 16);
         if($s === ''){
