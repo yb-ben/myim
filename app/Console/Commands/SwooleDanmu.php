@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Console\Danmu\BiliPacketParser;
 use App\Console\Danmu\BiliUtils;
 use Illuminate\Console\Command;
 use Swoole\Coroutine\Http\Client;
@@ -101,11 +102,13 @@ class SwooleDanmu extends Command
                     $ws->push($payload,WEBSOCKET_OPCODE_BINARY);
 
                         $last= 0;
+                        $parser = new BiliPacketParser(true);
+
                         while(true){
                             $time = time();
                             $frame = $ws->recv(1);
 
-                            var_dump(BiliUtils::parseMsg(bin2hex($frame)));
+                            var_dump($parser->parse($frame));
 
                             if($time - $last > 30){
                                 $last = $time;
