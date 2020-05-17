@@ -4,6 +4,8 @@
 namespace App\Console\Danmu;
 
 
+use Swoole\Coroutine\System;
+
 class BiliPacketParser
 {
 
@@ -93,7 +95,7 @@ class BiliPacketParser
             foreach ($this->buffer as $item){
                 $data .= implode(',',$item).PHP_EOL;
             }
-            echo \Swoole\Coroutine\System::fwrite($this->fp,$data);
+            echo System::fwrite($this->fp,$data);
             $this->buffer = [];
         });
     }

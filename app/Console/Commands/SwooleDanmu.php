@@ -116,7 +116,7 @@ class SwooleDanmu extends Command
                             }else{
                                 echo 3;
                                 var_dump($frame);
-                                $parser->parse($frame);
+                                //$parser->parse($frame);
                             }
 
                             if($time - $last > 30){
