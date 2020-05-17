@@ -107,7 +107,12 @@ class SwooleDanmu extends Command
                         while(true){
                             $time = time();
                             $frame = $ws->recv(1);
-                            var_dump($parser->parse($frame));
+                            if(is_object($frame)){
+                                var_dump($frame->data);
+                            }else{
+                                var_dump($frame);
+                            }
+                            //var_dump($parser->parse($frame->data));
 
                             if($time - $last > 30){
                                 $last = $time;
