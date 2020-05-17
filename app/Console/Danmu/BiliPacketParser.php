@@ -18,7 +18,7 @@ class BiliPacketParser
         if (empty($str)) {
             return $str;
         }
-        print_r( __LINE__) && var_dump(bin2hex($str));
+        //print_r( __LINE__) && var_dump(bin2hex($str));
         $header = substr($str,0,16);
         $header = bin2hex($header);
         $header = str_split($header,2);
@@ -52,7 +52,7 @@ class BiliPacketParser
         $header = substr($str,0,16);
         $header = bin2hex($header);
         $header = str_split($header,2);//头
-        $this->debug && print_r(__LINE__) && var_dump($header);
+        //$this->debug && print_r(__LINE__) && var_dump($header);
         $len =  base_convert($header[0].$header[1].$header[2].$header[3],16,10);//长度
         $body = substr($str,16);
 

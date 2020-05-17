@@ -110,14 +110,16 @@ class SwooleDanmu extends Command
                             if(is_object($frame)){
                                 $d = json_decode($frame->data);
                                 if (is_null($d)) {
+                                    echo 1;
                                     var_dump($parser->parse($frame->data));
                                 }else{
+                                    echo 2;
                                     var_dump($d);
                                 }
                             }else{
+                                echo 3;
                                 var_dump($parser->parse($frame));
                             }
-                            //var_dump($parser->parse($frame->data));
 
                             if($time - $last > 30){
                                 $last = $time;
