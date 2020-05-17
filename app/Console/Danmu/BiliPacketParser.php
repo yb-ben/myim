@@ -35,7 +35,8 @@ class BiliPacketParser
         if('05' === $header[11]){
 
             if('00' === $header[7]){
-                return $this->parseNotCompressData($body);
+                //return $this->parseNotCompressData($body);
+                return json_decode($body,JSON_OBJECT_AS_ARRAY);
             }else{
                 $context = inflate_init(ZLIB_ENCODING_DEFLATE);
                 $body = inflate_add($context,$body);
