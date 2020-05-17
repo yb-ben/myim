@@ -19,7 +19,9 @@ class BiliPacketParser
             return $str;
         }
         $header = substr($str,0,16);
-        $header = str_split(bin2hex($header),2);
+        $header = bin2hex($header);
+        $this->debug && var_dump($header);
+        $header = str_split($header,2);
         $this->debug && var_dump($header);
         $body = substr($str,16);
         if('08' === $header[11]){
