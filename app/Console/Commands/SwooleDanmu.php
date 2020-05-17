@@ -110,7 +110,7 @@ class SwooleDanmu extends Command
                             if(is_object($frame)){
                                 var_dump($frame->data);
                             }else{
-                                var_dump($frame);
+                                var_dump($parser->parse($frame));
                             }
                             //var_dump($parser->parse($frame->data));
 
