@@ -108,7 +108,12 @@ class SwooleDanmu extends Command
                             $time = time();
                             $frame = $ws->recv(1);
                             if(is_object($frame)){
-                                var_dump($frame->data);
+                                $d = json_decode($frame->data);
+                                if (is_null($d)) {
+                                    $parser->parse($d);
+                                }else{
+                                    var_dump($d);
+                                }
                             }else{
                                 var_dump($parser->parse($frame));
                             }
