@@ -6,6 +6,7 @@ use App\Console\Danmu\BiliPacketParser;
 use App\Console\Danmu\BiliUtils;
 use Illuminate\Console\Command;
 use Swoole\Coroutine\Http\Client;
+use Swoole\Process;
 use Swoole\Timer;
 use Swoole\WebSocket\Server;
 
@@ -42,6 +43,7 @@ class SwooleDanmu extends Command
      */
     public function handle()
     {
+        Process::daemon(true);
         go(function(){
             $roomId = $this->argument('roomId');
             $client = new Client('api.live.bilibili.com',443,true);
