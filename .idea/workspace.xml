@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="df0f63eb-d70d-46dd-a055-934970873efd" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/app/Console/Danmu/BiliUtils.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Console/Commands/SwooleDanmu.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Console/Commands/SwooleDanmu.php" afterDir="false" />
     </list>
@@ -125,7 +126,7 @@
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../ObserveLiver" />
     <property name="nodejs_package_manager_path" value="npm" />
   </component>
   <component name="RecentsManager">
@@ -158,7 +159,8 @@
       <workItem from="1589455457872" duration="8086000" />
       <workItem from="1589502526589" duration="33593000" />
       <workItem from="1589589638660" duration="9343000" />
-      <workItem from="1589615438064" duration="2662000" />
+      <workItem from="1589615438064" duration="4275000" />
+      <workItem from="1589677932609" duration="849000" />
     </task>
     <servers />
   </component>

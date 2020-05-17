@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Console\Danmu\BiliUtils;
 use Illuminate\Console\Command;
 use Swoole\Coroutine\Http\Client;
 use Swoole\Timer;
@@ -55,13 +56,12 @@ class SwooleDanmu extends Command
             $client->set(['timeout'=>3]);
             $client->get("/room/v1/Danmu/getConf?room_id=${roomId}&platform=pc&player=web");
             $body = json_decode($client->body,JSON_OBJECT_AS_ARRAY);
-            print_r($body);
             $client->close();
             if($body['code'] === 0 ){
                 $server = $body['data']['host_server_list'][0];
                 $key = $body['data']['token'];
                 $first = [
-                    'uid'=>4906232,
+                    'uid'=>0,
                     'roomid' => intval($roomId),
                     'protover'=>2,
                     "platform"=>"web",
@@ -74,17 +74,15 @@ class SwooleDanmu extends Command
 
                 $payload = json_encode($first);
                 $len = strlen($payload);
-                var_dump($len);
                 $payload= bin2hex($payload);
                 $l =  str_pad( ''.dechex( $len + 16) ,8,'0',STR_PAD_LEFT);
                 $payload = $l.'001000010000000700000001'.$payload;
 
-                var_dump($server);
                 $ws =  new Client($server['host'],$server['wss_port'],true);
                 $ws->setHeaders([
                     'Accept-Encoding'=>'gzip, deflate, br',
                     'Accept-Language'=>'zh-CN,zh;q=0.9',
-                   'Host'=>$server['host'],
+                    'Host'=>$server['host'],
                     'Origin'=>'https://'.$server['host'],
                     'User-Agent'=> 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.138 Safari/537.36'
                 ]);
@@ -100,18 +98,18 @@ class SwooleDanmu extends Command
 
                     $payload = pack("H*",$payload);
 
-                    var_dump($ws->push($payload,WEBSOCKET_OPCODE_BINARY));
+                    $ws->push($payload,WEBSOCKET_OPCODE_BINARY);
 
-                    var_dump($ws->errCode);
-                    var_dump($ws->statusCode);
-                    var_dump($ws->errMsg);
                         $last= 0;
-                        while($frame = $ws->recv()){
+                        while(true){
                             $time = time();
-                            var_dump($frame);
-                            if($time - $last > 1){
+                            $frame = $ws->recv(1);
+
+                            var_dump(BiliUtils::parseMsg(bin2hex($frame)));
+
+                            if($time - $last > 30){
                                 $last = $time;
-                                var_dump($ws->push($heartBit,WEBSOCKET_OPCODE_BINARY));
+                                $ws->push($heartBit,WEBSOCKET_OPCODE_BINARY);
                             }
                         }
 
