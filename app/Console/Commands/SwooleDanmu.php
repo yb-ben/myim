@@ -43,7 +43,7 @@ class SwooleDanmu extends Command
      */
     public function handle()
     {
-        $this->argument('--daemon') && Process::daemon(true);
+        $this->option('daemon') && Process::daemon(true);
         go(function(){
             $roomId = $this->argument('roomId');
             $client = new Client('api.live.bilibili.com',443,true);
@@ -103,14 +103,10 @@ class SwooleDanmu extends Command
 
                     $ws->push($payload,WEBSOCKET_OPCODE_BINARY);
 
-                        //$last= 0;
+                        $last= 0;
                         $parser = new BiliPacketParser($roomId,true);
-                        Timer::tick(30000,function()use(&$ws,&$heartBit){
-                            echo 1;
-                            $ws->push($heartBit,WEBSOCKET_OPCODE_BINARY);
-                        });
                         while(true){
-                            //$time = time();
+                            $time = time();
                             $frame = $ws->recv(1);
                             if(is_object($frame)){
                                 $d = json_decode($frame->data);
@@ -118,11 +114,10 @@ class SwooleDanmu extends Command
                                     $parser->parse($frame->data);
                                 }
                             }
-
-//                            if($time - $last > 30){
-//                                $last = $time;
-//                                $ws->push($heartBit,WEBSOCKET_OPCODE_BINARY);
-//                            }
+                            if($time - $last > 30){
+                                $last = $time;
+                                $ws->push($heartBit,WEBSOCKET_OPCODE_BINARY);
+                            }
                         }
 
                 }
