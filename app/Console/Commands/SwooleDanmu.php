@@ -103,11 +103,14 @@ class SwooleDanmu extends Command
 
                     $ws->push($payload,WEBSOCKET_OPCODE_BINARY);
 
-                        $last= 0;
+                        //$last= 0;
                         $parser = new BiliPacketParser($roomId,true);
-
+                        Timer::tick(30000,function()use(&$ws,&$heartBit){
+                            echo 1;
+                            $ws->push($heartBit,WEBSOCKET_OPCODE_BINARY);
+                        });
                         while(true){
-                            $time = time();
+                            //$time = time();
                             $frame = $ws->recv(1);
                             if(is_object($frame)){
                                 $d = json_decode($frame->data);
@@ -116,10 +119,10 @@ class SwooleDanmu extends Command
                                 }
                             }
 
-                            if($time - $last > 30){
-                                $last = $time;
-                                $ws->push($heartBit,WEBSOCKET_OPCODE_BINARY);
-                            }
+//                            if($time - $last > 30){
+//                                $last = $time;
+//                                $ws->push($heartBit,WEBSOCKET_OPCODE_BINARY);
+//                            }
                         }
 
                 }

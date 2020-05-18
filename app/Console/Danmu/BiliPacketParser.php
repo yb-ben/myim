@@ -4,7 +4,6 @@
 namespace App\Console\Danmu;
 
 
-use Swoole\Coroutine\System;
 
 class BiliPacketParser
 {
