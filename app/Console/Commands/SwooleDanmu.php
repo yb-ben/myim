@@ -17,7 +17,7 @@ class SwooleDanmu extends Command
      *
      * @var string
      */
-    protected $signature = 'swoole:danmu {roomId} {alias}';
+    protected $signature = 'swoole:danmu {roomId} {alias} {--daemon}';
 
     /**
      * The console command description.
@@ -43,7 +43,7 @@ class SwooleDanmu extends Command
      */
     public function handle()
     {
-        Process::daemon(true);
+        $this->argument('--daemon') && Process::daemon(true);
         go(function(){
             $roomId = $this->argument('roomId');
             $client = new Client('api.live.bilibili.com',443,true);
