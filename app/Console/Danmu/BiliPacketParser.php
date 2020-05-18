@@ -16,11 +16,14 @@ class BiliPacketParser
 
     protected $roomId ;
 
-    public function __construct($roomId , $debug = false)
+    protected $name ;
+
+    public function __construct($roomId,$name , $debug = false)
     {
         $this->debug = $debug;
         $this->roomId = $roomId;
-        $this->fp = fopen(storage_path()."/$roomId.danmu",'a+');
+        $this->name = $name;
+        $this->fp = fopen(storage_path()."/$name.danmu",'a+');
 
     }
 

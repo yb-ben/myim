@@ -46,6 +46,7 @@ class SwooleDanmu extends Command
         $this->option('daemon') && Process::daemon(true);
         go(function(){
             $roomId = $this->argument('roomId');
+            $alias = $this->argument('alias');
             $client = new Client('api.live.bilibili.com',443,true);
             $client->setHeaders([
                 'Host'=>'api.live.bilibili.com',
@@ -104,7 +105,7 @@ class SwooleDanmu extends Command
                     $ws->push($payload,WEBSOCKET_OPCODE_BINARY);
 
                         $last= 0;
-                        $parser = new BiliPacketParser($roomId,true);
+                        $parser = new BiliPacketParser($roomId,$alias,true);
                         while(true){
                             $time = time();
                             $frame = $ws->recv(1);
