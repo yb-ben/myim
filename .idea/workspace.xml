@@ -2,15 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="df0f63eb-d70d-46dd-a055-934970873efd" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/app/Console/Commands/DanmuList.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Http/Controllers/Danmu/IndexController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/danmu/index.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Console/Commands/SwooleDanmuV2.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/myim.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/myim.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Console/Commands/SwooleDanmu.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Console/Commands/SwooleDanmu.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Console/Danmu/BiliPacketParser.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Console/Danmu/BiliPacketParser.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Console/Danmu/BiliUtils.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Console/Danmu/BiliUtils.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/logging.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/logging.php" afterDir="false" />
     </list>
-    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -127,26 +124,33 @@
   </component>
   <component name="ProjectId" id="1btdivi68mEHqxJ8WTtqSAbDUhc" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
   <component name="PropertiesComponent">
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../ObserveLiver" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_package_manager_path" value="npm" />
+    <property name="settings.editor.selected.configurable" value="editor.preferences.fonts.default" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\phpstudy_pro\WWW\myim\public\js" />
     </key>
   </component>
-  <component name="RunDashboard">
-    <option name="ruleStates">
+  <component name="ServiceViewManager">
+    <option name="viewStates">
       <list>
-        <RuleState>
-          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
-        </RuleState>
-        <RuleState>
-          <option name="name" value="StatusDashboardGroupingRule" />
-        </RuleState>
+        <serviceView>
+          <treeState>
+            <expand />
+            <select />
+          </treeState>
+        </serviceView>
       </list>
     </option>
   </component>
@@ -167,6 +171,8 @@
       <workItem from="1589677932609" duration="3720000" />
       <workItem from="1589681668616" duration="11614000" />
       <workItem from="1589767510799" duration="7142000" />
+      <workItem from="1590022107103" duration="1748000" />
+      <workItem from="1590203537502" duration="1373000" />
     </task>
     <servers />
   </component>
@@ -185,5 +191,19 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="471" y="242" key="NewPhpClassDialog" timestamp="1590022824738">
+      <screen x="0" y="0" width="1440" height="860" />
+    </state>
+    <state x="471" y="242" key="NewPhpClassDialog/0.0.1440.860@0.0.1440.860" timestamp="1590022824738" />
+    <state x="221" y="61" key="SettingsEditor" timestamp="1590022200931">
+      <screen x="0" y="0" width="1440" height="860" />
+    </state>
+    <state x="221" y="61" key="SettingsEditor/0.0.1440.860@0.0.1440.860" timestamp="1590022200931" />
+    <state x="0" y="0" key="com.intellij.ide.util.TipDialog" timestamp="1590022097701">
+      <screen x="0" y="0" width="1440" height="860" />
+    </state>
+    <state x="0" y="0" key="com.intellij.ide.util.TipDialog/0.0.1440.860@0.0.1440.860" timestamp="1590022097701" />
   </component>
 </project>
