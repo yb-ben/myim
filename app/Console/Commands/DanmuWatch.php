@@ -29,11 +29,12 @@ class DanmuWatch extends Command
         Process::daemon();
         while (true) {
 
-            $ret = shell_exec('ps -ef | grep danmu | awk \'{if($3==1)print $2,$11;}\'');
+            $ret = shell_exec('ps -ef | grep swoole:danmu | awk \'{if($3==1)print $2,$11;}\'');
             $ret = explode("\n",$ret);
             $ret = array_filter($ret);
             $data = [];
             foreach ($ret as $line){
+
                 list($pid, $alias) = explode('.',$line);
                 $data[$alias] = $pid;
             }
