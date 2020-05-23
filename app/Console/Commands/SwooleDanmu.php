@@ -45,8 +45,12 @@ class SwooleDanmu extends Command
     {
         $this->option('daemon') && Process::daemon(true);
         go(function(){
-            $roomId = $this->argument('roomId');
+
             $alias = $this->argument('alias');
+            $roomId = $this->rooms[$alias];
+            if (empty($roomId)) {
+                return;
+            }
             $client = new Client('api.live.bilibili.com',443,true);
             $client->setHeaders([
                 'Host'=>'api.live.bilibili.com',
