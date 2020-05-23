@@ -43,6 +43,9 @@ class SwooleDanmuV2 extends Command
         'aza'=>'21696950',
         'roi'=>'21696953',
         'andou'=>'21224291',
+        'saya'=>'21763344',
+        'yukie'=>'21756924',
+        'ichigo'=>'21452118'
         //'hanon'=>'21669084',
     ];
 
@@ -50,7 +53,10 @@ class SwooleDanmuV2 extends Command
         'aza' => false,
         'roi' => false,
         'andou' => false,
-        'hanon' =>false
+        'hanon' =>false,
+        'saya'=>false,
+        'yukie'=>false,
+        'ichigo'=>false
     ];
 
     /**

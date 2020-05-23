@@ -22,7 +22,7 @@ class DanmuList extends Command
         foreach ($ret as $line){
             $data[] = explode(',',$line);
         }
-        return $data;
+        print_r($data);
     }
 
 

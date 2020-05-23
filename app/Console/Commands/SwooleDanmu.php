@@ -26,15 +26,15 @@ class SwooleDanmu extends Command
      */
     protected $description = 'swoole websocket';
 
-    /**
-     * Create a new command instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        parent::__construct();
-    }
+    protected $rooms = [
+        'aza'=>'21696950',
+        'roi'=>'21696953',
+        'andou'=>'21224291',
+        'saya'=>'21763344',
+        'yukie'=>'21756924',
+        'ichigo'=>'21452118'
+        //'hanon'=>'21669084',
+    ];
 
     /**
      * Execute the console command.
