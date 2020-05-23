@@ -32,7 +32,8 @@ class SwooleDanmu extends Command
         'andou'=>'21224291',
         'saya'=>'21763344',
         'yukie'=>'21756924',
-        'ichigo'=>'21452118'
+        'ichigo'=>'21452118',
+        'ruki' => '21403609'
         //'hanon'=>'21669084',
     ];
 
