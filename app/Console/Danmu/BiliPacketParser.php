@@ -23,7 +23,7 @@ class BiliPacketParser
         $this->debug = $debug;
         $this->roomId = $roomId;
         $this->name = $name;
-        $this->fp = fopen(storage_path()."/$name.'_'.$roomId.danmu",'a+');
+        $this->fp = fopen(storage_path()."/{$name}_{$roomId}.danmu",'a+');
 
     }
 
