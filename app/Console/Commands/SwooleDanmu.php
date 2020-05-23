@@ -113,7 +113,7 @@ class SwooleDanmu extends Command
                         $parser = new BiliPacketParser($roomId,$alias,true);
                         while(true){
                             $time = time();
-                            $frame = $ws->recv(1);
+                            $frame = $ws->recv(3);
                             if(is_object($frame)){
                                 $d = json_decode($frame->data);
                                 if (is_null($d)) {
