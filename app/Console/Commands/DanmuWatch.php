@@ -26,25 +26,28 @@ class DanmuWatch extends Command
     ];
 
     public function handle(){
-        Process::daemon();
-        while (true) {
+        //Process::daemon();
+        go(function(){
 
-            $ret = shell_exec('ps -ef | grep swoole:danmu | awk \'{if($3==1)print $2,$11;}\'');
-            $ret = explode("\n",$ret);
-            $ret = array_filter($ret);
-            $data = [];
-            foreach ($ret as $line){
+            while (true) {
 
-                list($pid, $alias) = explode(' ',$line);
-                $data[$alias] = $pid;
-            }
-            foreach ($this->rooms as $k => $v){
-                if (!isset($data[$k])) {
-                    shell_exec('php artisan swoole:danmu ' . $k . ' --daemon');
+                $ret = shell_exec('ps -ef | grep swoole:danmu | awk \'{if($3==1)print $2,$11;}\'');
+                $ret = explode("\n",$ret);
+                $ret = array_filter($ret);
+                $data = [];
+                foreach ($ret as $line){
+
+                    list($pid, $alias) = explode(' ',$line);
+                    $data[$alias] = $pid;
                 }
+                foreach ($this->rooms as $k => $v){
+                    if (!isset($data[$k])) {
+                        print_r(exec('php artisan swoole:danmu ' . $k . ' --daemon'));
+                    }
+                }
+                sleep(30);
             }
-            sleep(30);
-        }
+        });
     }
 
 
