@@ -27,6 +27,6 @@ Route::group(['namespace'=>'IM','middleware'=>'auth'],function(){
     Route::get('/IM/{roomId}','RoomController@show');
 });
 
-Route::group(['namespace'=> 'danmu'],function(){
+Route::group(['namespace'=> 'Danmu'],function(){
    Route::get('/index','IndexController@index');
 });
