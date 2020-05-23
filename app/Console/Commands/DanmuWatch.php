@@ -31,9 +31,10 @@ class DanmuWatch extends Command
 
             $ret = shell_exec('ps -ef | grep danmu | awk \'{if($3==1)print $2,$11;}\'');
             $ret = explode("\n",$ret);
+            $ret = array_filter($ret);
             $data = [];
             foreach ($ret as $line){
-                list($pid, $alias) = explode(' ',$line);
+                list($pid, $alias) = explode('.',$line);
                 $data[$alias] = $pid;
             }
             foreach ($this->rooms as $k => $v){
