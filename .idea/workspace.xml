@@ -1,13 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="df0f63eb-d70d-46dd-a055-934970873efd" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/app/Console/Commands/SwooleDanmuV2.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/myim.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/myim.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Console/Danmu/BiliUtils.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Console/Danmu/BiliUtils.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/logging.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/logging.php" afterDir="false" />
-    </list>
+    <list default="true" id="df0f63eb-d70d-46dd-a055-934970873efd" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -172,7 +166,7 @@
       <workItem from="1589681668616" duration="11614000" />
       <workItem from="1589767510799" duration="7142000" />
       <workItem from="1590022107103" duration="1748000" />
-      <workItem from="1590203537502" duration="1373000" />
+      <workItem from="1590203537502" duration="1628000" />
     </task>
     <servers />
   </component>

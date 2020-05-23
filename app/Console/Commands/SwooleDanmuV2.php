@@ -71,7 +71,6 @@ class SwooleDanmuV2 extends Command
 
         go(function(){
             while(true){
-
                 foreach ($this->status as $k => $v) {
                     if (!$v && isset($this->rooms[$k])) {
                         go(function ()use($k){
