@@ -33,15 +33,15 @@ class DanmuWatch extends Command
             $ret = explode("\n",$ret);
             $data = [];
             foreach ($ret as $line){
-                $data[] = explode(' ',$line);
-
+                list($pid, $alias) = explode(' ',$line);
+                $data[$alias] = $pid;
             }
             foreach ($this->rooms as $k => $v){
                 if (!isset($data[$k])) {
                     shell_exec('php artisan swoole:danmu ' . $k . ' --daemon');
                 }
             }
-            sleep(60);
+            sleep(30);
         }
     }
 
