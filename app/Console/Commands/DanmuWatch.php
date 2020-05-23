@@ -26,7 +26,7 @@ class DanmuWatch extends Command
     ];
 
     public function handle(){
-        //Process::daemon();
+        Process::daemon();
         go(function(){
 
             while (true) {
