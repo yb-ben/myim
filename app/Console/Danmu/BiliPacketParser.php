@@ -73,13 +73,13 @@ class BiliPacketParser
         if($d['cmd'] === 'DANMU_MSG'){
             $uid = $d['info'][2][0];
             if($uid === 421267475 || false !== mb_strpos($d['info'][1],'艾因')){
-                $this->buffer[] = [$d['info'][1],$uid,$d['info'][2][1],date('Y-m-d H:i:s',$d['info'][9]['ts'])];
+                $this->buffer[] = [date('Y-m-d H:i:s',$d['info'][9]['ts']),$d['info'][2][1],$uid,$d['info'][1]];
             }
         }
         else if($d['cmd'] === 'SUPER_CHAT_MESSAGE'){
             $uid = $d['data']['uid'];
             if($uid === 421267475){
-                $this->buffer[] = [$uid,$d['data']['message'],$d['data']['user_info']['uname'],date('Y-m-d H:i:s',$d['data']['ts'])];
+                $this->buffer[] = [date('Y-m-d H:i:s',$d['data']['ts']),$d['data']['user_info']['uname'],$uid,$d['data']['message']];
             }
         }
         $s = substr($body, $len - 16);
