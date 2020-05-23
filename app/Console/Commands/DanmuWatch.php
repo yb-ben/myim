@@ -35,7 +35,7 @@ class DanmuWatch extends Command
             $data = [];
             foreach ($ret as $line){
 
-                list($pid, $alias) = explode('.',$line);
+                list($pid, $alias) = explode(' ',$line);
                 $data[$alias] = $pid;
             }
             foreach ($this->rooms as $k => $v){
