@@ -42,7 +42,7 @@ class DanmuWatch extends Command
                 }
                 foreach ($this->rooms as $k => $v){
                     if (!isset($data[$k])) {
-                        print_r(exec('php artisan swoole:danmu ' . $k . ' --daemon'));
+                        exec('php artisan swoole:danmu ' . $k . ' --daemon > /dev/null 2>&1 &');
                     }
                 }
                 sleep(30);
