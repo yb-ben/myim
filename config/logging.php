@@ -47,6 +47,12 @@ return [
             'level' => 'debug',
         ],
 
+        'danmu'=>[
+            'driver'=>'single',
+            'path'=>storage_path('logs/danmu.log'),
+            'level'=>'debug'
+        ],
+
         'daily' => [
             'driver' => 'daily',
             'path' => storage_path('logs/laravel.log'),
