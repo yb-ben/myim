@@ -53,6 +53,13 @@ return [
             'level'=>'debug'
         ],
 
+
+        'eine'=>[
+            'driver'=>'single',
+            'path'=>storage_path('logs/eine.log'),
+            'level'=>'debug'
+        ],
+
         'daily' => [
             'driver' => 'daily',
             'path' => storage_path('logs/laravel.log'),

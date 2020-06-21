@@ -43,7 +43,7 @@ class BiliUtils
      * @param $roomId
      * @param $key
      */
-    public function connectDanmuServer($host, $port, $roomId, $key,$alias)
+    public function connectDanmuServer($host, $port, $roomId, $key, $alias)
     {
         $first = [
             'uid' => 0,
@@ -56,13 +56,13 @@ class BiliUtils
         ];
 
 
-        $heartBit = pack('H*','0000001f0010000100000002000000015b6f626a656374204f626a6563745d');
+        $heartBit = pack('H*', '0000001f0010000100000002000000015b6f626a656374204f626a6563745d');
 
         $payload = json_encode($first);
         $len = strlen($payload);
-        $payload= bin2hex($payload);
-        $l =  str_pad( ''.dechex( $len + 16) ,8,'0',STR_PAD_LEFT);
-        $payload = $l.'001000010000000700000001'.$payload;
+        $payload = bin2hex($payload);
+        $l = str_pad('' . dechex($len + 16), 8, '0', STR_PAD_LEFT);
+        $payload = $l . '001000010000000700000001' . $payload;
 
 
         $ws = new Client($host, $port, true);
@@ -82,23 +82,23 @@ class BiliUtils
         ]);
         $ret = $ws->upgrade('/sub');
         if ($ret) {
-            $payload = pack("H*",$payload);
+            $payload = pack("H*", $payload);
             $ws->push($payload, WEBSOCKET_OPCODE_BINARY);
-            $last= 0;
-            $parser = new BiliPacketParser($roomId,$alias,true);
+            $last = 0;
+            $parser = new BiliPacketParser($roomId, $alias, true);
 
-            while(true){
+            while (true) {
                 $time = time();
                 $frame = $ws->recv(1);
-                if(is_object($frame)){
+                if (is_object($frame)) {
                     $d = json_decode($frame->data);
                     if (is_null($d)) {
                         $parser->parse($frame->data);
                     }
                 }
-                if($time - $last > 30){
+                if ($time - $last > 30) {
                     $last = $time;
-                    $ws->push($heartBit,WEBSOCKET_OPCODE_BINARY);
+                    $ws->push($heartBit, WEBSOCKET_OPCODE_BINARY);
                 }
             }
         }
@@ -106,23 +106,46 @@ class BiliUtils
     }
 
 
-
-    public function relationStat($uid){
-        $client = new Client('space.bilibili.com', 443, true);
-        $client->setHeaders([
-            'Host' => 'space.bilibili.com',
-            'origin' => 'https://space.bilibili.com',
-            'referer' => "https://space.bilibili.com/$uid/dynamic",
-            'accept' => 'application/json, text/javascript, */*; q=0.01',
-            'accept-encoding' => 'gzip, deflate, br',
-            'accept-language' => 'zh-CN,zh;q=0.9',
-            'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.138 Safari/537.36'
+    public function relationStat($uid)
+    {
+//        $client = new Client('space.bilibili.com', 443, true);
+//        $client->setHeaders([
+//            'Host' => 'space.bilibili.com',
+//            'origin' => 'https://space.bilibili.com',
+//            'referer' => "https://space.bilibili.com/$uid/dynamic",
+//            'accept' => 'application/json, text/javascript, */*; q=0.01',
+//            'accept-encoding' => 'gzip, deflate, br',
+//            'accept-language' => 'zh-CN,zh;q=0.9',
+//            'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.138 Safari/537.36'
+//        ]);
+//        $client->set(['timeout' => 3]);
+//        $client->get("/x/relation/stat?vmid=$uid");
+//        $body = json_decode($client->body, JSON_OBJECT_AS_ARRAY);
+//        $client->close();
+//        return $body;
+//
+        $uri = "https://api.bilibili.com/x/relation/stat?vmid=$uid";
+        $client = new \GuzzleHttp\Client();
+        $response = $client->request('GET', $uri, [
+            'headers' => [
+                'Host' => 'api.bilibili.com',
+                'origin' => 'https://api.bilibili.com',
+                'Referer' => "https://space.bilibili.com/$uid/dynamic",
+                'Accept' => 'application/json, text/javascript, */*; q=0.01',
+                'Accept-Encoding' => 'gzip, deflate, br',
+                'Accept-Language' => 'zh-CN,zh;q=0.9',
+                'User-Agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.138 Safari/537.36'
+            ],
+            'verify'=>true,
         ]);
-        $client->set(['timeout' => 3]);
-        $client->get("/x/relation/stat?vmid=$uid");
-        $body = json_decode($client->body, JSON_OBJECT_AS_ARRAY);
-        $client->close();
-        return $body;
 
+        if ($response->getStatusCode() === 200) {
+
+            $s = $response->getBody();
+            $content= $s->getContents();
+            $info = json_decode($content,JSON_OBJECT_AS_ARRAY);
+            return $info;
+        }
+        return false;
     }
 }
