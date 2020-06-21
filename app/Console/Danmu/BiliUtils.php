@@ -4,6 +4,7 @@
 namespace App\Console\Danmu;
 
 
+use DemeterChain\C;
 use Swoole\Coroutine\Http\Client;
 
 class BiliUtils
@@ -104,4 +105,24 @@ class BiliUtils
         $ws->close();
     }
 
+
+
+    public function relationStat($uid){
+        $client = new Client('space.bilibili.com', 443, true);
+        $client->setHeaders([
+            'Host' => 'space.bilibili.com',
+            'origin' => 'https://space.bilibili.com',
+            'referer' => "https://space.bilibili.com/$uid/dynamic",
+            'accept' => 'application/json, text/javascript, */*; q=0.01',
+            'accept-encoding' => 'gzip, deflate, br',
+            'accept-language' => 'zh-CN,zh;q=0.9',
+            'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.138 Safari/537.36'
+        ]);
+        $client->set(['timeout' => 3]);
+        $client->get("/x/relation/stat?vmid=$uid");
+        $body = json_decode($client->body, JSON_OBJECT_AS_ARRAY);
+        $client->close();
+        return $body;
+
+    }
 }
