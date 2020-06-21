@@ -23,7 +23,6 @@ class EineWatcher extends Command
         $this->option('daemon') && Process::daemon(true);
         $biliUtils = new BiliUtils();
         while(true){
-            sleep(60);
             try{
                 $info =  $biliUtils->relationStat('421267475');
                 if ($info) {
@@ -46,6 +45,8 @@ class EineWatcher extends Command
             }catch (\Throwable $throwable){
                 Log::channel('eine')->error($throwable->getMessage(),$throwable->getTrace());
             }
+
+            sleep(60);
         }
 
     }
