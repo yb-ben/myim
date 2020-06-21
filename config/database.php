@@ -45,8 +45,8 @@ return [
 
         'eine'=>[
             'driver' => 'mysql',
-            'host' => '120.78.76.101',
-            'port' =>'3303',
+            'host' => '127.0.0.1',
+            'port' =>'3306',
             'database' =>'eine',
             'username' =>  'root',
             'password' => '159753hybHYB!',
