@@ -19,13 +19,10 @@ class EineWatcher extends Command
 
     public function handle(){
         $this->option('daemon') && Process::daemon(true);
-        go(function() {
-
             $biliUtils = new BiliUtils();
             $ret = $biliUtils->relationStat('421267475');
             print_r($ret);
 
-        });
     }
 
 
