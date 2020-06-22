@@ -45,8 +45,8 @@ return [
 
         'eine'=>[
             'driver' => 'mysql',
-            'host' => 'localhost',
-            'port' =>'3306',
+            'host' => env('EINE_DB_HOST','localhost'),
+            'port' => env('EINE_DB_PORT','3306'),
             'database' =>'eine',
             'username' =>  'root',
             'password' => '159753hybHYB!',
